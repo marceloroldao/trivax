@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  voi-sweep:
+  benchmark-suite:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -21,6 +21,8 @@ jobs:
       - name: Install
         run: python -m pip install -e .
       - name: Run V5 VOI sweep
+        env:
+          TRIVAX_BENCHMARK_OUTPUT: benchmark-results
         run: |
           mkdir -p benchmark-results
           python benchmarks/voi_sweep.py | tee benchmark-results/voi_sweep.txt
@@ -30,6 +32,9 @@ jobs:
       - name: Run composite adversarial benchmark
         run: |
           python benchmarks/composite_adversarial.py > benchmark-results/composite_adversarial.json
+      - name: Run OOD holdout benchmark
+        run: |
+          python benchmarks/holdout_generalization.py | tee benchmark-results/holdout_generalization.csv
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
