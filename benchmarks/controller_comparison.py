@@ -8,6 +8,7 @@ from statistics import mean, median
 from trivax.baselines import PerturbAndObserve
 from trivax.core import TrivaxController
 from trivax.experimental import CoherenceAdaptiveController, RegimeAdaptiveController
+from trivax.probabilistic import ProbabilisticRegimeController
 
 
 class StepPlant:
@@ -55,7 +56,6 @@ def run(controller, plant, steps=700, noise_sigma=0.0, seed=0):
         observation = plant.evaluate(action, t)
         if noise_sigma:
             observation += rng.gauss(0.0, noise_sigma)
-
         next_action = controller_step(controller, observation)
         errors.append(abs(action - plant.optimum_at(t)))
         effort.append(abs(next_action - action))
@@ -89,34 +89,24 @@ def make_controllers(step_size):
         "trivax_v0_1": TrivaxController(step_size=step_size),
         "trivax_coherence_adaptive": CoherenceAdaptiveController(step_size=step_size),
         "trivax_v0_2_regime": RegimeAdaptiveController(step_size=step_size),
+        "trivax_v0_3_probabilistic": ProbabilisticRegimeController(step_size=step_size),
         "perturb_and_observe": PerturbAndObserve(step_size=step_size),
     }
 
 
 def benchmark(step_sizes=(0.005, 0.01, 0.02, 0.05), seeds=range(20)):
     results = []
-    scenarios = [
-        ("sinusoidal_clean", lambda: SinusoidalPlant(), 1000, 0.0, None),
-        ("sinusoidal_noise_005", lambda: SinusoidalPlant(), 1000, 0.005, None),
-        ("sinusoidal_noise_010", lambda: SinusoidalPlant(), 1000, 0.01, None),
-        ("sinusoidal_noise_020", lambda: SinusoidalPlant(), 1000, 0.02, None),
-        ("step_clean", lambda: StepPlant(), 700, 0.0, 300),
-        ("step_noise_005", lambda: StepPlant(), 700, 0.005, 300),
-        ("step_noise_010", lambda: StepPlant(), 700, 0.01, 300),
-        ("step_noise_020", lambda: StepPlant(), 700, 0.02, 300),
-    ]
+    scenarios = []
+    for sigma in (0.0, 0.005, 0.01, 0.02):
+        suffix = "clean" if sigma == 0.0 else f"noise_{int(sigma*1000):03d}"
+        scenarios.append((f"sinusoidal_{suffix}", lambda: SinusoidalPlant(), 1000, sigma, None))
+        scenarios.append((f"step_{suffix}", lambda: StepPlant(), 700, sigma, 300))
 
     for scenario_name, plant_factory, steps, noise_sigma, settling_start in scenarios:
         for step_size in step_sizes:
             for seed in seeds:
                 for controller_name, controller in make_controllers(step_size).items():
-                    errors, effort = run(
-                        controller,
-                        plant_factory(),
-                        steps=steps,
-                        noise_sigma=noise_sigma,
-                        seed=seed,
-                    )
+                    errors, effort = run(controller, plant_factory(), steps=steps, noise_sigma=noise_sigma, seed=seed)
                     row = {
                         "scenario": scenario_name,
                         "controller": controller_name,
