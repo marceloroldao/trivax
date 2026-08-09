@@ -44,6 +44,9 @@ jobs:
       - name: Run Core-RC comparison
         run: |
           python benchmarks/core_rc_comparison.py | tee benchmark-results/core_rc_comparison.csv
+      - name: Run temporal-credit advantage map
+        run: |
+          python benchmarks/temporal_advantage_map.py | tee benchmark-results/temporal_advantage_map.csv
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
