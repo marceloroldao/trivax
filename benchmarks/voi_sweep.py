@@ -7,7 +7,10 @@ optimality.
 """
 from __future__ import annotations
 
+import csv
+import json
 import math
+import os
 import random
 from collections import deque
 from statistics import mean
@@ -74,13 +77,13 @@ def run(seed: int, info_weight: float, cost_weight: float, min_value: float) -> 
     }
 
 
-def main() -> None:
+def sweep() -> list[dict[str, float]]:
     info_weights = (0.5, 1.0, 2.0)
     cost_weights = (5.0, 20.0, 80.0)
     min_values = (0.02, 0.05, 0.10)
     seeds = range(10)
+    rows: list[dict[str, float]] = []
 
-    rows = []
     for iw in info_weights:
         for cw in cost_weights:
             for mv in min_values:
@@ -95,8 +98,6 @@ def main() -> None:
                     "delay_accuracy": mean(r["delay_accuracy"] for r in results),
                     "probes": mean(r["probes"] for r in results),
                 }
-                # Screening score: control quality first, then identification,
-                # then explicit penalties for effort and active probes.
                 row["score"] = (
                     row["tail_mae"]
                     + 0.35 * row["mae"]
@@ -107,6 +108,28 @@ def main() -> None:
                 rows.append(row)
 
     rows.sort(key=lambda r: r["score"])
+    return rows
+
+
+def export(rows: list[dict[str, float]], output_dir: str) -> None:
+    os.makedirs(output_dir, exist_ok=True)
+    csv_path = os.path.join(output_dir, "voi_sweep.csv")
+    json_path = os.path.join(output_dir, "voi_sweep.json")
+    fields = list(rows[0].keys())
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(rows, f, indent=2, sort_keys=True)
+
+
+def main() -> None:
+    rows = sweep()
+    output_dir = os.environ.get("TRIVAX_BENCHMARK_OUTPUT")
+    if output_dir:
+        export(rows, output_dir)
+
     print("rank iw cw minV score tailMAE MAE delayAcc effort probes")
     for rank, row in enumerate(rows[:12], 1):
         print(
