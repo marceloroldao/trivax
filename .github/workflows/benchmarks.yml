@@ -35,6 +35,9 @@ jobs:
       - name: Run OOD holdout benchmark
         run: |
           python benchmarks/holdout_generalization.py | tee benchmark-results/holdout_generalization.csv
+      - name: Run V5 ablation benchmark
+        run: |
+          python benchmarks/ablation_v5.py > benchmark-results/ablation_v5.json
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
