@@ -7,7 +7,7 @@ from statistics import mean, median
 
 from trivax.baselines import PerturbAndObserve
 from trivax.core import TrivaxController
-from trivax.experimental import CoherenceAdaptiveController
+from trivax.experimental import CoherenceAdaptiveController, RegimeAdaptiveController
 
 
 class StepPlant:
@@ -88,17 +88,22 @@ def make_controllers(step_size):
     return {
         "trivax_v0_1": TrivaxController(step_size=step_size),
         "trivax_coherence_adaptive": CoherenceAdaptiveController(step_size=step_size),
+        "trivax_v0_2_regime": RegimeAdaptiveController(step_size=step_size),
         "perturb_and_observe": PerturbAndObserve(step_size=step_size),
     }
 
 
-def benchmark(step_sizes=(0.005, 0.01, 0.02, 0.05), seeds=range(10)):
+def benchmark(step_sizes=(0.005, 0.01, 0.02, 0.05), seeds=range(20)):
     results = []
     scenarios = [
         ("sinusoidal_clean", lambda: SinusoidalPlant(), 1000, 0.0, None),
-        ("sinusoidal_noisy", lambda: SinusoidalPlant(), 1000, 0.01, None),
+        ("sinusoidal_noise_005", lambda: SinusoidalPlant(), 1000, 0.005, None),
+        ("sinusoidal_noise_010", lambda: SinusoidalPlant(), 1000, 0.01, None),
+        ("sinusoidal_noise_020", lambda: SinusoidalPlant(), 1000, 0.02, None),
         ("step_clean", lambda: StepPlant(), 700, 0.0, 300),
-        ("step_noisy", lambda: StepPlant(), 700, 0.01, 300),
+        ("step_noise_005", lambda: StepPlant(), 700, 0.005, 300),
+        ("step_noise_010", lambda: StepPlant(), 700, 0.01, 300),
+        ("step_noise_020", lambda: StepPlant(), 700, 0.02, 300),
     ]
 
     for scenario_name, plant_factory, steps, noise_sigma, settling_start in scenarios:
