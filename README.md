@@ -2,189 +2,91 @@
 
 **TRIVAX — Resolutive Adaptive Edge Control Runtime**
 
-TRIVAX is an experimental research and engineering framework for compact adaptive inference, memory-aware decision making, black-box optimization, and closed-loop control on constrained hardware.
+TRIVAX is an experimental research and engineering framework for compact adaptive inference, memory-aware decision making, black-box optimization, temporal credit assignment, and closed-loop control on constrained hardware.
 
-The project investigates whether a small, inspectable resolutive state and explicitly controlled computational budget can support real-time autonomous control without requiring a neural network in the control loop.
+> **Release:** v0.1.0 — first public experimental research release.
+>
+> **Scientific status:** experimental. Results must be reproduced from the code and benchmark protocol before being treated as scientific or engineering evidence. TRIVAX does not claim general superiority over established control methods.
 
-> **Status:** early research scaffold. Results must be reproduced from code before being treated as scientific or engineering evidence.
+## v0.1 research focus
 
-## Core idea
-
-TRIVAX closes the loop between observation, state estimation, memory, decision and action:
-
-```text
-physical system / environment
-          |
-          v
-      observation
-          |
-          v
-   TRIVAX Encoder
-          |
-          v
- resolutive state R_t
-          |
-   +------+------+----------------+
-   |             |                |
-   v             v                v
-Inference      Memory         Optimization
-   |             |                |
-   +-------------+----------------+
-                 |
-                 v
-          Decision Core
-                 |
-                 v
-              action
-                 |
-                 v
-            actuator
-                 |
-                 +--------> feedback
-```
-
-A generic control cycle is represented as
+The strongest current experimental result is not a universal-controller claim. The v0.1 research line investigates control under delayed and time-varying feedback, including explicit historical temporal credit:
 
 \[
-X_t \rightarrow \mathcal{R}_t \rightarrow A_t \rightarrow X_{t+1}.
+\Delta y_t \leftrightarrow \Delta a_{t-\hat d}.
 \]
 
-The initial computational state may include terms such as
+The repository preserves multiple experimental runtime generations so that architectural changes, negative results, and ablations remain auditable.
 
-\[
-\mathcal{R}_t=(\rho_t,\phi_t,\kappa_t,\chi_t,\tau_t,\ldots),
-\]
+Current experiments include robust observation routing, online delay estimation, historical temporal credit, causal-delay confidence, optional active identification/value-of-information probing, Core-RC simplification, and online regime selection between conventional adaptive control and temporal-credit control.
 
-where the exact meaning of each component is application-specific and must be documented by each encoder.
+## Scope
 
-## Initial scope
-
-TRIVAX v0.1 focuses on **adaptive edge control**:
+TRIVAX investigates:
 
 - sensor-to-state encoding;
 - compact sequential inference;
-- memory-assisted decisions;
+- delayed-feedback estimation;
+- historical temporal credit assignment;
 - adaptive exploration/exploitation;
 - black-box objective optimization;
 - multi-timescale control loops;
-- closed-loop simulation;
+- reproducible closed-loop simulation;
 - future ESP32/STM32/RISC-V deployment.
 
-The first reference problem is a simulated controller that must search for and maintain the maximum value of a changing scalar objective under disturbances.
+## Reproducibility
 
-## Relationship with companion projects
-
-TRIVAX is intended to integrate, rather than duplicate, the following research lines:
-
-- `resolutive-inference` — compact sequential inference;
-- `memoria.ia` — hierarchical resolutive memory;
-- `resolutive-DB` — resolutive addressing and retrieval;
-- `resolutive-computing` — adaptive search and black-box optimization.
-
-These integrations are optional. The core package must remain independently testable.
-
-## Repository layout
-
-```text
-trivax/
-├── src/trivax/
-│   ├── core.py
-│   ├── encoder.py
-│   ├── runtime.py
-│   ├── control.py
-│   └── simulation.py
-├── benchmarks/
-│   └── scalar_tracking.py
-├── examples/
-│   └── scalar_control.py
-├── tests/
-│   └── test_core.py
-├── docs/
-│   ├── architecture.md
-│   └── benchmark_protocol.md
-├── pyproject.toml
-└── README.md
-```
-
-## Scientific and engineering principles
-
-1. Compare competing controllers under the same disturbance profile and evaluation budget.
-2. Record seeds, configuration, runtime, memory use and all metrics.
-3. Separate empirical results from theoretical interpretation.
-4. Use ablation tests before attributing gains to a specific mechanism.
-5. Do not claim general superiority over neural, classical-control or optimization methods outside evaluated tasks.
-6. Prefer inspectable state and deterministic execution where possible.
-7. Treat embedded deployment constraints as first-class metrics.
-
-## Reference benchmark
-
-The first benchmark evaluates whether a controller can locate and track a moving optimum.
-
-Metrics include:
-
-- convergence time;
-- mean absolute tracking error;
-- cumulative regret;
-- overshoot;
-- control effort;
-- number of objective evaluations;
-- runtime;
-- memory footprint.
-
-Future comparisons should include suitable classical baselines such as perturb-and-observe, hill climbing and PID-like controllers when their assumptions match the test problem.
-
-## Quick start
+Install the package and run tests:
 
 ```bash
 python -m pip install -e .
 python -m pytest
-python benchmarks/scalar_tracking.py
 ```
 
-## Roadmap
+Representative scientific benchmarks live under `benchmarks/`. GitHub Actions executes the benchmark suite and stores result artifacts. Comparisons include Perturb & Observe, adaptive hill climbing, TRIVAX runtime generations, ablations, out-of-distribution holdouts, temporal-advantage mapping, and online regime selection.
 
-### v0.1 — Control scaffold
+Benchmark results are evidence only for the evaluated protocol. They must not be generalized to unrelated plants, noise models, control constraints, or safety-critical systems without independent validation.
 
-- deterministic resolutive state;
-- adaptive scalar controller;
-- closed-loop simulator;
-- reproducible benchmark protocol;
-- tests and metrics.
+## Scientific and engineering principles
 
-### v0.2 — Memory and inference
+1. Compare competing controllers under the same disturbance profile and evaluation budget.
+2. Record seeds, configuration, runtime, memory use, and metrics.
+3. Separate empirical results from theoretical interpretation.
+4. Use ablation tests before attributing gains to a mechanism.
+5. Preserve scientifically relevant negative results.
+6. Do not claim general superiority outside evaluated tasks.
+7. Prefer inspectable state and deterministic execution where possible.
+8. Treat embedded deployment constraints as first-class metrics.
 
-- state history;
-- nearest prior experience;
-- coherence estimation;
-- exploration adapted by confidence/coherence.
+## Relationship with Resolutive projects
 
-### v0.3 — External resolutive modules
+TRIVAX follows the terminology and project-governance conventions of the Resolutive research ecosystem where applicable. Computational concepts inspired by Resolutive research are treated as engineering hypotheses; physical or philosophical interpretations are not evidence of controller performance.
 
-- optional `resolutive-inference` adapter;
-- optional `resolutive-DB` adapter;
-- optional `resolutive-computing` optimizer adapter;
-- optional hierarchical memory adapter.
+Companion research repositories may include `resolutive-inference`, `memoria.ia`, `resolutive-DB`, and `resolutive-computing`. TRIVAX remains independently testable.
 
-### v0.4 — Embedded runtime
+## Licensing
 
-- fixed-memory execution mode;
-- ESP32 reference implementation;
-- integer/fixed-point experiments;
-- timing and power benchmarks.
+TRIVAX is **source-available for research and education**, not OSI open source.
 
-### v0.5 — Robotics and IoT
+The repository `LICENSE` permits non-commercial academic, educational, research, evaluation, and reproducibility use subject to its conditions. **Commercial use requires a separate paid/commercial license and prior written authorization.** See `COMMERCIAL-LICENSE.md`.
 
-- sensor fusion interface;
-- robotics control examples;
-- network/IoT adaptive control examples;
-- multi-loop scheduler.
+Public visibility of this repository does not grant commercial-use rights.
 
-## Project position
+## Safety
 
-TRIVAX is not presented as a replacement for established control theory, reinforcement learning or neural architectures. It is a research framework for testing a narrower hypothesis: whether compact state, explicit memory and adaptive search can form a useful low-cost control runtime for edge systems.
+TRIVAX v0.1 is research software. It is not validated as the sole or primary controller for safety-critical systems. Physical deployment requires independent engineering validation, appropriate fail-safes, and compliance with applicable standards and regulations.
+
+## Citation
+
+Academic users should cite the version used. `CITATION.cff` contains citation metadata for v0.1.0. A Zenodo DOI may be added after archival deposition of the release.
+
+## Version
+
+**v0.1.0 — Experimental public research release**
+
+This release establishes the reproducible baseline. Subsequent versions must be compared against v0.1 rather than silently replacing its architecture or results.
 
 ## Author
 
-Marcelo Roldão Matos
-
+Marcelo Roldão Matos  
 ETBRA Tecnologias — 2026
