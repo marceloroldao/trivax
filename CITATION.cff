@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use TRIVAX in academic work, please cite this software release."
+title: "TRIVAX: Resolutive Adaptive Edge Control Runtime"
+type: software
+authors:
+  - family-names: "Matos"
+    given-names: "Marcelo Roldão"
+version: "0.1.0"
+date-released: "2026-08-14"
+repository-code: "https://github.com/marceloroldao/trivax"
+license: "LicenseRef-TRIVAX-Research-Commercial-1.0"
+keywords:
+  - adaptive control
+  - edge control
+  - temporal credit
+  - delayed feedback
+  - embedded systems
+  - IoT
+  - robotics
+abstract: >-
+  TRIVAX is an experimental framework for compact adaptive edge control,
+  temporal credit assignment, delayed-feedback control, and inspectable
+  decision making on constrained hardware. Version 0.1 is an experimental
+  research release and does not claim general superiority over established
+  control methods.
