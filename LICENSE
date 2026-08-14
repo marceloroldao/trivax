@@ -1,0 +1,56 @@
+TRIVAX RESEARCH, EDUCATIONAL AND COMMERCIAL LICENSE
+Version 1.0 — 14 August 2026
+
+Copyright (c) 2026 Marcelo Roldão Matos. All rights reserved except as expressly granted below.
+
+1. DEFINITIONS
+"Software" means the TRIVAX source code, documentation, examples, benchmark code, and other materials distributed with this license.
+"Non-Commercial Research Use" means use whose primary purpose is academic research, education, teaching, evaluation, reproducibility, or experimentation and which is not performed for commercial advantage or monetary compensation.
+"Commercial Use" means use of the Software, in whole or in part, for commercial advantage, monetary compensation, revenue-generating products or services, paid consulting or integration, internal production/business operations, or development of a commercial product or service.
+
+2. NON-COMMERCIAL RESEARCH AND EDUCATIONAL LICENSE
+Subject to the conditions below, the copyright holder grants universities, schools, students, educators, academic researchers, nonprofit research institutions, and individual researchers a worldwide, royalty-free, non-exclusive, revocable license to use, copy, modify, execute, benchmark, reproduce, and redistribute the Software and modified versions solely for Non-Commercial Research Use.
+
+3. CONDITIONS
+Any redistribution permitted under Section 2 must:
+(a) retain this LICENSE file and all copyright and attribution notices;
+(b) clearly identify modified versions and significant modifications;
+(c) not imply endorsement by Marcelo Roldão Matos, ETBRA Tecnologias, or the TRIVAX project;
+(d) preserve citation information supplied with an applicable release; and
+(e) not remove notices concerning commercial licensing.
+
+4. COMMERCIAL USE REQUIRES A SEPARATE LICENSE
+No Commercial Use rights are granted by this license. Commercial Use requires prior written authorization under a separate commercial license from the copyright holder. Commercial terms, fees, scope, support, warranties, patent rights (if any), and deployment rights are negotiated separately.
+
+5. PUBLICATION AND BENCHMARKING
+Academic publication of results obtained using the Software is permitted under Section 2. Researchers are encouraged to report configuration, seeds, datasets or generators, benchmark protocol, Software version/commit, and limitations sufficient for reproducibility. Published benchmark results must not be represented as official TRIVAX results unless reproduced from the corresponding official release protocol.
+
+6. TRADEMARKS AND PROJECT NAME
+This license does not grant trademark rights. The names "TRIVAX", "Resolutive", project logos, and associated branding may be used only for accurate attribution or reference, not to imply sponsorship, certification, or endorsement.
+
+7. PATENTS
+No patent license is granted except to the extent that a patent license is strictly necessary for the Non-Commercial Research Use expressly permitted by Section 2 and the copyright holder has authority to grant it. Commercial patent rights, if applicable, require a separate written agreement.
+
+8. CONTRIBUTIONS
+Unless a separate written contributor agreement states otherwise, contributions accepted into the official repository are provided under terms that permit the project maintainer to distribute them under this license and under separate commercial licenses. Contributors retain copyright in their contributions.
+
+9. NO WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, SAFETY, OR FITNESS FOR CONTROL OF ANY PHYSICAL SYSTEM.
+
+10. LIMITATION OF LIABILITY
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COPYRIGHT HOLDER AND CONTRIBUTORS SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS, INJURY, BUSINESS INTERRUPTION, DATA LOSS, EQUIPMENT DAMAGE, OR OTHER LIABILITY ARISING FROM OR RELATED TO THE SOFTWARE OR ITS USE.
+
+11. SAFETY-CRITICAL USE
+This research license does not authorize deployment of the Software as the sole or primary controller in safety-critical systems, including systems where malfunction could reasonably cause death, personal injury, substantial property damage, or environmental harm. Such deployment requires independent engineering validation and a separate written agreement where applicable.
+
+12. TERMINATION
+Rights granted under this license terminate automatically upon material breach. Upon termination, the recipient must cease exercising the rights granted by this license. Sections intended by their nature to survive termination remain effective.
+
+13. NO OPEN-SOURCE REPRESENTATION
+This is a source-available research license with restrictions on commercial use. It is not represented as an Open Source Initiative (OSI) approved open-source license.
+
+14. GOVERNING RIGHTS
+Nothing in this license limits rights that cannot lawfully be restricted under applicable law, including applicable statutory exceptions. Any rights not expressly granted are reserved by the copyright holder.
+
+15. COMMERCIAL LICENSING
+For commercial licensing, use the contact channel identified in the official TRIVAX repository or project documentation.
