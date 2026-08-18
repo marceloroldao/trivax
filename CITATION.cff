@@ -5,10 +5,8 @@ type: software
 authors:
   - family-names: "Matos"
     given-names: "Marcelo Roldão"
+    orcid: "https://orcid.org/0009-0003-6075-4680"
 version: "0.1.0"
-date-released: "2026-08-14"
-repository-code: "https://github.com/marceloroldao/trivax"
-license: "LicenseRef-TRIVAX-Research-Commercial-1.0"
 keywords:
   - adaptive control
   - edge control
@@ -20,6 +18,6 @@ keywords:
 abstract: >-
   TRIVAX is an experimental framework for compact adaptive edge control,
   temporal credit assignment, delayed-feedback control, and inspectable
-  decision making on constrained hardware. Version 0.1 is an experimental
+  decision making on constrained hardware. Version 0.1.0 is an experimental
   research release and does not claim general superiority over established
   control methods.
