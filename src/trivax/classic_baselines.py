@@ -13,7 +13,12 @@ class PIDState:
 
 
 class PIDController:
-    """Lightweight bounded PID baseline with anti-windup."""
+    """Lightweight bounded PID baseline with anti-windup.
+
+    Important: PID is a tracking-controller reference. It requires an explicit
+    measurement setpoint/error signal and is therefore not information-matched
+    to black-box extremum optimizers that observe only an objective value.
+    """
 
     def __init__(self, *, kp: float = 0.8, ki: float = 0.02, kd: float = 0.08,
                  action0: float = 0.5, lower: float = 0.0, upper: float = 1.0,
@@ -50,11 +55,10 @@ class ESState:
 
 
 class ExtremumSeekingController:
-    """Compact perturbation-based extremum-seeking baseline.
+    """Compact dependency-free extremum-seeking reference.
 
-    This is intentionally simple and dependency-free. It estimates the local
-    ascent direction from a sinusoidal dither correlated with the measured
-    objective.
+    ES is information-matched to TRIVAX's black-box objective setting: it uses
+    only the scalar objective observation and its internally generated dither.
     """
 
     def __init__(self, *, action0: float = 0.5, amplitude: float = 0.015,
@@ -93,11 +97,11 @@ class SimpleMPCState:
 
 
 class SimpleModelPredictiveController:
-    """One-step model-based optimizer used as a transparent MPC reference.
+    """One-step local-model optimizer used as a model-aware reference.
 
-    It assumes a quadratic objective model around an estimated optimum. This is
-    not intended as a full industrial MPC implementation; it is a controlled
-    baseline that explicitly receives a plant-model estimate.
+    This class is intentionally transparent and lightweight; it is not a full
+    industrial MPC implementation. Results from it must be labelled
+    "simple/model-aware reference", not state-of-the-art MPC evidence.
     """
 
     def __init__(self, *, action0: float = 0.5, step: float = 0.02,
