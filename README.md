@@ -4,7 +4,7 @@
 
 TRIVAX is an experimental research and engineering framework for compact adaptive inference, memory-aware decision making, black-box optimization, temporal credit assignment, and closed-loop control on constrained hardware.
 
-> **Release:** v0.1.0 — first public experimental research release.
+> **Release line:** v0.1.0 — prepared as the first public experimental research release.
 >
 > **Scientific status:** experimental. Results must be reproduced from the code and benchmark protocol before being treated as scientific or engineering evidence. TRIVAX does not claim general superiority over established control methods.
 
@@ -58,11 +58,21 @@ Benchmark results are evidence only for the evaluated protocol. They must not be
 7. Prefer inspectable state and deterministic execution where possible.
 8. Treat embedded deployment constraints as first-class metrics.
 
-## Relationship with Resolutive projects
+## Relationship with Resolutive Science
+
+`resolutive-science` is the normative source of truth for shared Resolutive Science terminology, notation and scientific-status conventions.
+
+- Resolutive Science repository baseline: `v0.1.1`
+- RSMS compatibility: `1.0-rc.1` — candidate compatibility, subject to re-audit when RSMS 1.0 becomes stable
+- Project governance baseline: `RSPS 1.0-draft`
 
 TRIVAX follows the terminology and project-governance conventions of the Resolutive research ecosystem where applicable. Computational concepts inspired by Resolutive research are treated as engineering hypotheses; physical or philosophical interpretations are not evidence of controller performance.
 
 Companion research repositories may include `resolutive-inference`, `memoria.ia`, `resolutive-DB`, and `resolutive-computing`. TRIVAX remains independently testable.
+
+## Repository visibility and publication
+
+The v0.1.0 line is prepared for public research publication. The repository may remain private during final publication checks; private visibility does not change the release maturity designation. When visibility is changed to public, the same licensing and scientific-status restrictions continue to apply.
 
 ## Licensing
 
@@ -82,9 +92,9 @@ Academic users should cite the version used. `CITATION.cff` contains citation me
 
 ## Version
 
-**v0.1.0 — Experimental public research release**
+**v0.1.0 — Experimental research release line / publication-ready baseline**
 
-This release establishes the reproducible baseline. Subsequent versions must be compared against v0.1 rather than silently replacing its architecture or results.
+This release line establishes the reproducible baseline. Subsequent versions must be compared against v0.1 rather than silently replacing its architecture or results.
 
 ## Author
 
