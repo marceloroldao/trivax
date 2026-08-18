@@ -46,6 +46,9 @@ class TrivaxRegimeSelector:
         exit_threshold: float = 0.42,
         min_dwell: int = 24,
         delay_score_floor: float = 0.45,
+        delay_weight: float = 0.58,
+        dynamic_weight: float = 0.24,
+        noise_weight: float = 0.18,
     ) -> None:
         if window < 5:
             raise ValueError("window must be >= 5")
@@ -53,6 +56,10 @@ class TrivaxRegimeSelector:
             raise ValueError("require 0 <= exit < enter <= 1")
         if min_dwell <= 0:
             raise ValueError("min_dwell must be positive")
+        if min(delay_weight, dynamic_weight, noise_weight) < 0.0:
+            raise ValueError("selector weights must be non-negative")
+        if delay_weight + dynamic_weight + noise_weight <= 0.0:
+            raise ValueError("at least one selector weight must be positive")
 
         self.adaptive = adaptive or AdaptiveHillClimber()
         self.temporal = temporal or TrivaxRuntimeV2()
@@ -61,6 +68,10 @@ class TrivaxRegimeSelector:
         self.exit_threshold = float(exit_threshold)
         self.min_dwell = int(min_dwell)
         self.delay_score_floor = float(delay_score_floor)
+        total_weight = float(delay_weight + dynamic_weight + noise_weight)
+        self.delay_weight = float(delay_weight) / total_weight
+        self.dynamic_weight = float(dynamic_weight) / total_weight
+        self.noise_weight = float(noise_weight) / total_weight
 
         self.mode = RegimeMode.ADAPTIVE
         self.action = float(self.adaptive.action)
@@ -95,7 +106,12 @@ class TrivaxRegimeSelector:
         dynamic_term = max(0.0, min(1.0, speed / 0.004))
         snr_like = speed / (noise + 1e-9)
         noise_term = max(0.0, min(1.0, (snr_like - 0.7) / 2.3))
-        return max(0.0, min(1.0, 0.58 * delay_term + 0.24 * dynamic_term + 0.18 * noise_term))
+        score = (
+            self.delay_weight * delay_term
+            + self.dynamic_weight * dynamic_term
+            + self.noise_weight * noise_term
+        )
+        return max(0.0, min(1.0, score))
 
     def step(self, observation: float) -> tuple[float, RegimeSelectorState]:
         obs = float(observation)
