@@ -53,6 +53,9 @@ jobs:
       - name: Run v0.2 oracle regret benchmark
         run: |
           python benchmarks/oracle_regret_selector.py | tee benchmark-results/oracle_regret_selector.csv
+      - name: Run v0.2 selector ablation
+        run: |
+          python benchmarks/regime_selector_ablation_v02.py | tee benchmark-results/regime_selector_ablation_v02.csv
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
