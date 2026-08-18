@@ -4,7 +4,9 @@
 
 TRIVAX is an experimental research and engineering framework for compact adaptive inference, memory-aware decision making, black-box optimization, temporal credit assignment, and closed-loop control on constrained hardware.
 
-> **Release line:** v0.1.0 — prepared as the first public experimental research release.
+> **Archived release:** v0.1.1 — first public experimental research baseline archived on Zenodo.
+>
+> **DOI:** `10.5281/zenodo.21989027`
 >
 > **Scientific status:** experimental. Results must be reproduced from the code and benchmark protocol before being treated as scientific or engineering evidence. TRIVAX does not claim general superiority over established control methods.
 
@@ -70,10 +72,6 @@ TRIVAX follows the terminology and project-governance conventions of the Resolut
 
 Companion research repositories may include `resolutive-inference`, `memoria.ia`, `resolutive-DB`, and `resolutive-computing`. TRIVAX remains independently testable.
 
-## Repository visibility and publication
-
-The v0.1.0 line is prepared for public research publication. The repository may remain private during final publication checks; private visibility does not change the release maturity designation. When visibility is changed to public, the same licensing and scientific-status restrictions continue to apply.
-
 ## Licensing
 
 TRIVAX is **source-available for research and education**, not OSI open source.
@@ -88,15 +86,22 @@ TRIVAX v0.1 is research software. It is not validated as the sole or primary con
 
 ## Citation
 
-Academic users should cite the version used. `CITATION.cff` contains citation metadata for v0.1.0. A Zenodo DOI may be added after archival deposition of the release.
+Archived TRIVAX v0.1.1 release:
+
+**Marcelo Roldão Matos. TRIVAX: Resolutive Adaptive Edge Control Runtime, v0.1.1. Zenodo. 2026. DOI: 10.5281/zenodo.21989027.**
+
+Persistent identifier: `https://doi.org/10.5281/zenodo.21989027`
+
+`CITATION.cff` contains machine-readable author and software citation metadata.
 
 ## Version
 
-**v0.1.0 — Experimental research release line / publication-ready baseline**
+**v0.1.1 — Experimental research release / archived public baseline**
 
-This release line establishes the reproducible baseline. Subsequent versions must be compared against v0.1 rather than silently replacing its architecture or results.
+The v0.1.x line establishes the reproducible baseline. Subsequent versions must be compared against v0.1 rather than silently replacing its architecture or results. Active development continues separately in `v0.2-dev`.
 
 ## Author
 
 Marcelo Roldão Matos  
+ORCID: 0009-0003-6075-4680  
 ETBRA Tecnologias — 2026
