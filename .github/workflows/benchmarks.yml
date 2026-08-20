@@ -7,6 +7,12 @@ on:
       - "benchmarks/**"
       - "src/trivax/**"
       - ".github/workflows/benchmarks.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "benchmarks/**"
+      - "src/trivax/**"
+      - ".github/workflows/benchmarks.yml"
   workflow_dispatch:
 
 jobs:
