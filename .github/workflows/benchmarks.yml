@@ -2,6 +2,12 @@ name: benchmarks
 
 on:
   push:
+    branches: [main, v0.2-dev]
+    paths:
+      - "benchmarks/**"
+      - "src/trivax/**"
+      - ".github/workflows/benchmarks.yml"
+  pull_request:
     branches: [main]
     paths:
       - "benchmarks/**"
@@ -50,6 +56,27 @@ jobs:
       - name: Run online regime selector benchmark
         run: |
           python benchmarks/regime_selector_comparison.py | tee benchmark-results/regime_selector_comparison.csv
+      - name: Run v0.2 oracle regret benchmark
+        run: |
+          python benchmarks/oracle_regret_selector.py | tee benchmark-results/oracle_regret_selector.csv
+      - name: Run v0.2 selector ablation
+        run: |
+          python benchmarks/regime_selector_ablation_v02.py | tee benchmark-results/regime_selector_ablation_v02.csv
+      - name: Run v0.2 selector calibration
+        run: |
+          python benchmarks/selector_calibration_v02.py | tee benchmark-results/selector_calibration_v02.csv
+      - name: Run v0.2 blind selector holdout
+        run: |
+          python benchmarks/selector_blind_holdout_v02.py | tee benchmark-results/selector_blind_holdout_v02.csv
+      - name: Run v0.2 worst-regime robustness
+        run: |
+          python benchmarks/worst_regime_v02.py | tee benchmark-results/worst_regime_v02.csv
+      - name: Run v0.2 classical-control reference comparison
+        run: |
+          python benchmarks/classic_market_baselines_v02.py | tee benchmark-results/classic_market_baselines_v02.csv
+      - name: Run v0.2 information-matched black-box comparison
+        run: |
+          python benchmarks/information_matched_blackbox_v02.py | tee benchmark-results/information_matched_blackbox_v02.csv
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
